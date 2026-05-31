@@ -1,0 +1,16 @@
+.container {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  margin: 20px;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: blue;
+  }
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}

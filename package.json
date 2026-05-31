@@ -32,6 +32,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.3",
+    "sass": "^1.100.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12"
@@ -41,7 +42,7 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{json,md,css,scss,html,yml,yaml}": [
+    "*.{json,md,css,scss,sass,html,yml,yaml}": [
       "prettier --write"
     ]
   }
