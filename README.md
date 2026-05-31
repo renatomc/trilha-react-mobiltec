@@ -27,6 +27,16 @@ Projeto React + TypeScript + Vite com padronizacao automatica de codigo usando E
 2. Antes de abrir PR, rode npm run check.
 3. No commit, o hook pre-commit ja valida e formata os arquivos alterados automaticamente.
 
+## GitHub API sem bater rate limit
+
+Crie um arquivo `.env.local` na raiz do projeto com um token pessoal do GitHub:
+
+```bash
+VITE_GITHUB_TOKEN=seu_token_aqui
+```
+
+Use um token pessoal do GitHub com permissao de leitura publica. Com isso, as chamadas deixam de usar o limite anonimo da API e passam a usar a autenticacao do seu usuario.
+
 ## Extensoes recomendadas no VS Code
 
 - ESLint (dbaeumer.vscode-eslint)

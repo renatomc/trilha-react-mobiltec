@@ -1,61 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { ChangeEvent } from 'react'
-import githubApi from './services/githubApi'
+import { useGithubRepositories } from './hooks/useGithubRepositories'
 
 function App() {
   const [username, setUsername] = useState('facebook')
-  const [repositories, setRepositories] = useState<GithubRepository[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
-
-  useEffect(() => {
-    const normalizedUsername = username.trim()
-
-    if (!normalizedUsername) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setRepositories([])
-      setErrorMessage('')
-      return
-    }
-
-    let ignore = false
-
-    async function fetchRepositories() {
-      setIsLoading(true)
-      setErrorMessage('')
-
-      try {
-        const response = await githubApi.get<GithubRepository[]>(
-          `/users/${encodeURIComponent(normalizedUsername)}/repos`,
-          {
-            params: {
-              sort: 'updated',
-              per_page: 10,
-            },
-          },
-        )
-
-        if (!ignore) {
-          setRepositories(response.data)
-        }
-      } catch {
-        if (!ignore) {
-          setRepositories([])
-          setErrorMessage('Nao foi possivel carregar os repositorios desse usuario.')
-        }
-      } finally {
-        if (!ignore) {
-          setIsLoading(false)
-        }
-      }
-    }
-
-    fetchRepositories()
-
-    return () => {
-      ignore = true
-    }
-  }, [username])
+  const { data: repositories = [], isLoading, isError } = useGithubRepositories(username)
 
   function handleUsernameChange(event: ChangeEvent<HTMLInputElement>) {
     setUsername(event.target.value)
@@ -75,9 +24,9 @@ function App() {
       />
 
       {isLoading && <p>Carregando repositorios...</p>}
-      {errorMessage && <p>{errorMessage}</p>}
+      {isError && <p>Nao foi possivel carregar os repositorios desse usuario.</p>}
 
-      {!isLoading && !errorMessage && (
+      {!isLoading && !isError && (
         <ul>
           {repositories.map((repository) => (
             <li key={repository.id}>
@@ -91,13 +40,6 @@ function App() {
       )}
     </main>
   )
-}
-
-type GithubRepository = {
-  id: number
-  name: string
-  html_url: string
-  description: string | null
 }
 
 export default App
