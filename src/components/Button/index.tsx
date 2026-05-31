@@ -1,7 +1,16 @@
 import './styles.scss'
 
-function Button() {
-  return <button className="container">Botão</button>
+type ButtonProps = {
+  label: string
+  onClick: () => void
+}
+
+function Button({ label, onClick }: ButtonProps) {
+  return (
+    <button className="container" onClick={onClick}>
+      {label}
+    </button>
+  )
 }
 
 export default Button
