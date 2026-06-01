@@ -5,6 +5,7 @@ const menuItems = [
   { to: '/github', label: 'GitHub API' },
   { to: '/metricas', label: 'Metricas' },
   { to: '/zustand-testes', label: 'Zustand Testes' },
+  { to: '/repo-detail', label: 'Repo Detalhes' },
 ]
 
 function MainLayout() {

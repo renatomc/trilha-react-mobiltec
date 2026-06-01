@@ -1,10 +1,19 @@
 import { useState } from 'react'
 import type { ChangeEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useGithubRepositories } from '../hooks/useGithubRepositories'
+import { useSelectedRepoStore } from '../stores/selectedRepoStore'
 
 function GithubReposPage() {
   const [username, setUsername] = useState('facebook')
   const { data: repositories = [], isLoading, isError } = useGithubRepositories(username)
+  const { selectRepo } = useSelectedRepoStore()
+  const navigate = useNavigate()
+
+  function handleSelectRepo(repo: (typeof repositories)[number]) {
+    selectRepo(repo)
+    navigate('/repo-detail')
+  }
 
   function handleUsernameChange(event: ChangeEvent<HTMLInputElement>) {
     setUsername(event.target.value)
@@ -45,17 +54,27 @@ function GithubReposPage() {
               key={repository.id}
               className="rounded-xl border border-white/10 bg-slate-900/60 p-4"
             >
-              <a
-                href={repository.html_url}
-                target="_blank"
-                rel="noreferrer"
-                className="font-semibold text-cyan-300 hover:underline"
-              >
-                {repository.name}
-              </a>
-              {repository.description && (
-                <p className="mt-2 text-sm text-slate-300">{repository.description}</p>
-              )}
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <a
+                    href={repository.html_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-semibold text-cyan-300 hover:underline"
+                  >
+                    {repository.name}
+                  </a>
+                  {repository.description && (
+                    <p className="mt-2 text-sm text-slate-300">{repository.description}</p>
+                  )}
+                </div>
+                <button
+                  onClick={() => handleSelectRepo(repository)}
+                  className="shrink-0 rounded-lg bg-cyan-500/20 border border-cyan-400/30 px-3 py-1 text-xs font-semibold text-cyan-300 hover:bg-cyan-500/40 transition"
+                >
+                  Ver detalhes
+                </button>
+              </div>
             </li>
           ))}
         </ul>

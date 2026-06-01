@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import GithubReposPage from './pages/GithubReposPage'
 import MetricsPage from './pages/MetricsPage'
 import ZustandTestes from './pages/ZustandTestes'
+import RepoDetailPage from './pages/RepoDetailPage'
 
 export const appRouter = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ export const appRouter = createBrowserRouter([
       { path: 'github', element: <GithubReposPage /> },
       { path: 'metricas', element: <MetricsPage /> },
       { path: 'zustand-testes', element: <ZustandTestes /> },
+      { path: 'repo-detail', element: <RepoDetailPage /> },
     ],
   },
 ])
